@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 0
+  platformSettingsDirtyTick: 638291235251760674
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -141,8 +141,8 @@ ScriptedImporter:
     uvTransform: {x: 498, y: 4}
   - name: laser_Frame_1
     originalName: 
-    pivot: {x: 3.1944442, y: -1.2051282}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -161,8 +161,8 @@ ScriptedImporter:
     uvTransform: {x: 282, y: 4}
   - name: laser_Frame_2
     originalName: 
-    pivot: {x: 3.1944442, y: -1.2051282}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -181,8 +181,8 @@ ScriptedImporter:
     uvTransform: {x: 326, y: 4}
   - name: laser_Frame_3
     originalName: 
-    pivot: {x: 3.1944442, y: -1.2051282}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -201,8 +201,8 @@ ScriptedImporter:
     uvTransform: {x: 370, y: 4}
   - name: laser_Frame_4
     originalName: 
-    pivot: {x: 3.1944442, y: -1.2051282}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -221,8 +221,8 @@ ScriptedImporter:
     uvTransform: {x: 414, y: 4}
   - name: laser_Frame_5
     originalName: 
-    pivot: {x: 3.53125, y: -1.4000001}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -241,8 +241,8 @@ ScriptedImporter:
     uvTransform: {x: 458, y: 4}
   - name: laser_Frame_6
     originalName: 
-    pivot: {x: 3.9642859, y: -1.6451613}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -261,8 +261,8 @@ ScriptedImporter:
     uvTransform: {x: 276, y: 56}
   - name: laser_Frame_7
     originalName: 
-    pivot: {x: 4.230769, y: -1.7333332}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -281,7 +281,7 @@ ScriptedImporter:
     uvTransform: {x: 312, y: 56}
   - name: laser_Frame_8
     originalName: 
-    pivot: {x: 0.44444448, y: -1.0227273}
+    pivot: {x: 0.08, y: 0.48}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -301,7 +301,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: laser_Frame_9
     originalName: 
-    pivot: {x: 0.43181816, y: -1.5625}
+    pivot: {x: 0.06, y: 0.51}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -321,7 +321,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 56}
   - name: laser_Frame_10
     originalName: 
-    pivot: {x: 0.42528737, y: -2.0769231}
+    pivot: {x: 0.05, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -341,7 +341,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 96}
   - name: laser_Frame_11
     originalName: 
-    pivot: {x: 0.42528737, y: -2.0769231}
+    pivot: {x: 0.05, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -361,7 +361,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 130}
   - name: laser_Frame_12
     originalName: 
-    pivot: {x: 0.4208494, y: -2.3913043}
+    pivot: {x: 0.045, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -381,7 +381,7 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 164}
   - name: laser_Frame_13
     originalName: 
-    pivot: {x: 0.4208494, y: -2.3913043}
+    pivot: {x: 0.045, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -522,7 +522,43 @@ ScriptedImporter:
       spriteId: 0588d6a4510f89141b3d1e6f6888193a
     linkedCells: []
     parentIndex: -1
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 300, y: 100}
