@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public float chaseSpeed;
     public float currentSpeed;
     public Vector3 faceDir;
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     protected Animator anim;
 
 
@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour
 
     public bool findPlayer;
 
+
+    public float maxHealth;
+    public float currentHealth;
+    private SpriteRenderer spriteRenderer;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -26,6 +31,8 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         currentSpeed = chaseSpeed;
         originScale = transform.localScale;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     void Start()
@@ -73,6 +80,35 @@ public class Enemy : MonoBehaviour
         }
         else
             findPlayer = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            StartCoroutine(DamageFlash());
+        }
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        for (int i = 0; i < 3; i++)  // 闪烁3次
+        {
+            spriteRenderer.color = new Color(1, 0, 0, 0.5f);  // 设置为半透明的红色
+            yield return new WaitForSeconds(0.1f);  // 等待0.1秒
+            spriteRenderer.color = Color.white;  // 设置为正常颜色
+            yield return new WaitForSeconds(0.1f);  // 等待0.1秒
+        }
+    }
+    private void Die()
+    {
+        // 你可以在这里处理敌人的死亡，例如播放动画，播放声音等。
+        Destroy(gameObject);  // 这会销毁当前的敌人对象，你可以根据需要进行修改。
     }
 
     void OnDrawGizmos()

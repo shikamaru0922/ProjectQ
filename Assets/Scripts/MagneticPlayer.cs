@@ -76,6 +76,7 @@ public class MagneticPlayer : MonoBehaviour
                 Repulse();
             }
         }
+
     }
 
     private void TogglePole()
@@ -122,30 +123,26 @@ public class MagneticPlayer : MonoBehaviour
                                 {
                                     GetComponent<Rigidbody2D>().gravityScale = 0;
                                 }
-                                else 
+                                else
                                 {
                                     GetComponent<Rigidbody2D>().gravityScale = originGravity;
                                 }
-                                    
+
                             }
 
                         }
                         else
-                        {/*
+                        {
                             // 吸引物体到玩家位置
                             Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
-                            rb.AddForce(directionToPlayer * attractionForce);*/
+                            rb.AddForce(directionToPlayer * attractionForce);
 
                             // 如果检测到磁铁在玩家的检测范围内，返回
-                           
+
                             if (collision.onMagnet)
                             {
                                 return;  // 如果目标物体是检测到的磁铁，则不再施加力
                             }
-
-                            // 吸引物体到玩家位置
-                            Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
-                            rb.AddForce(directionToPlayer * attractionForce);
                         }
                     }
                 }
