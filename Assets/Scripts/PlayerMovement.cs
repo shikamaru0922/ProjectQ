@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public int side = 1;
 
     public int limitSpeed = 10;
+    private AnimationScript anim;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         collision = GetComponent<Collision>();
         rb = GetComponent<Rigidbody2D>();
         magneticPlayer = GetComponent<MagneticPlayer>();
+        anim = GetComponentInChildren<AnimationScript>();
     }
 
     // Update is called once per frame
@@ -56,11 +58,13 @@ public class PlayerMovement : MonoBehaviour
             return;
         else
         Walk(dir);
-        
+        anim.SetHorizontalMovement(x, y, rb.velocity.y);
+
+
         if (collision.onWall && Input.GetButton("Fire3") && canMove)
         {
             if (side != collision.wallSide)
-                //anim.Flip(side * -1);
+                anim.Flip(side * -1);
             wallGrab = true;
             wallSlide = false;
         }
@@ -106,8 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            //anim.SetTrigger("jump");
-
+            anim.SetTrigger("jump");
             if (collision.onGround)
                 Jump(Vector2.up, false);
             if (collision.onWall && !collision.onGround)
@@ -122,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.onGround && !groundTouch)
         {
-            //GroundTouch();
+            GroundTouch();
             groundTouch = true;
         }
 
@@ -139,12 +142,12 @@ public class PlayerMovement : MonoBehaviour
         if (x > 0)
         {
             side = 1;
-            //anim.Flip(side);
+            anim.Flip(side);
         }
         if (x < 0)
         {
             side = -1;
-            //anim.Flip(side);
+            anim.Flip(side);
         }
     }
 
@@ -153,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDashing = false;
 
-       // side = anim.sr.flipX ? -1 : 1;
+       side = anim.sr.flipX ? -1 : 1;
 
         //jumpParticle.Play();
     }
@@ -211,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
     private void WallSlide()
     {
         if (collision.wallSide != side)
-            //anim.Flip(side * -1);
+            anim.Flip(side * -1);
 
         if (!canMove)
             return;

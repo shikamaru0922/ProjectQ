@@ -28,7 +28,7 @@ public class MagneticPlayer : MonoBehaviour
     private Collision collision;
 
     public bool isAtrracting;
-
+    public float upForceInRepulse;
     public LayerMask magnetLayer;  // 设置这个LayerMask来包括磁铁的层
     public float detectionRadius = 1f;  // 设置检测半径
     [SerializeField]
@@ -133,16 +133,17 @@ public class MagneticPlayer : MonoBehaviour
                         }
                         else
                         {
-                            // 吸引物体到玩家位置
-                            Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
-                            rb.AddForce(directionToPlayer * attractionForce);
-
                             // 如果检测到磁铁在玩家的检测范围内，返回
-
                             if (collision.onMagnet)
                             {
                                 return;  // 如果目标物体是检测到的磁铁，则不再施加力
                             }
+                            // 吸引物体到玩家位置
+                            Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
+                            rb.AddForce(directionToPlayer * attractionForce);
+
+                            
+
                         }
                     }
                 }
@@ -186,7 +187,7 @@ public class MagneticPlayer : MonoBehaviour
                     }
                     // 对玩家施加反方向的力，实现反弹效果
                     GetComponent<Rigidbody2D>().AddForce(repulseDirection * repulseForce, ForceMode2D.Impulse);
-                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.up * upForceInRepulse, ForceMode2D.Impulse);
 
                     //GetComponent<Rigidbody2D>().velocity += repulseDirection * repulseForce; 
                 }

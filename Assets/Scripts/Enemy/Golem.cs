@@ -153,7 +153,6 @@ public class Golem :Enemy
         isMoving = false; // 到达目标后，设置为非移动状态
         isWaiting = true;
         yield return new WaitForSeconds(waitingTime);
-        Debug.Log("in here");
         PickRandomTarget();
         isWaitingForNextTarget = false; // 重置标记
 
