@@ -2556,14 +2556,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GolemGroup
       objectReference: {fileID: 0}
-    - target: {fileID: 6024655579956802651, guid: 45192621877557e4492a7f2e0d0d18c6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8828430166491617242, guid: 45192621877557e4492a7f2e0d0d18c6, type: 3}
-      propertyPath: chaseSpeed
-      value: 300
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

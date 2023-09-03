@@ -91,7 +91,9 @@ public class Golem :Enemy
         if (playerDetected)
         {
             findPlayer = true;
+            anim.SetBool("FindPlayer", true);
             return playerDetected.transform;
+
         }
         else
         {
@@ -145,6 +147,19 @@ public class Golem :Enemy
 
     }
 
+    public override void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+            anim.SetTrigger("GetHit");
+        }
+        else
+        {
+            StartCoroutine(DamageFlash());
+        }
+    }
     private IEnumerator WaitAndPickNewTarget()
     {
         if (isWaitingForNextTarget) yield break; // 如果已经有一个等待协程在运行，直接退出

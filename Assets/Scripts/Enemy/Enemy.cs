@@ -24,6 +24,11 @@ public class Enemy : MonoBehaviour
     public float currentHealth;
     private SpriteRenderer spriteRenderer;
 
+    private PlayerState playerState; // 玩家的状态类引用
+    public float damagePerSecond;
+
+    public LayerMask magnetLayer;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -37,7 +42,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -56,7 +61,25 @@ public class Enemy : MonoBehaviour
         rb.velocity = new Vector2(currentSpeed * faceDir.x * Time.deltaTime, rb.velocity.y);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((magnetLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
+            TakeDamage(1);
+       
+    }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerState = collision.gameObject.GetComponent<PlayerState>();
+            if (playerState != null)
+            {
+                Debug.Log("123");
+                playerState.currentHealth -= damagePerSecond * Time.deltaTime;
+            }
+        }
+    }
     public virtual void DetectPlayer()
     {
         // 检查玩家是否在探测范围内
@@ -82,7 +105,7 @@ public class Enemy : MonoBehaviour
             findPlayer = false;
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
@@ -91,11 +114,12 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            StartCoroutine(DamageFlash());
+            anim.SetTrigger("GetHit");
+            
         }
     }
 
-    private IEnumerator DamageFlash()
+    public IEnumerator DamageFlash()
     {
         for (int i = 0; i < 3; i++)  // 闪烁3次
         {
@@ -105,10 +129,16 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(0.1f);  // 等待0.1秒
         }
     }
-    private void Die()
+    public void Die()
     {
         // 你可以在这里处理敌人的死亡，例如播放动画，播放声音等。
-        Destroy(gameObject);  // 这会销毁当前的敌人对象，你可以根据需要进行修改。
+        //Destroy(gameObject);  // 这会销毁当前的敌人对象，你可以根据需要进行修改。
+        anim.SetTrigger("isDead");
+    }
+
+    public void SelfDestroy()
+    {
+        Destroy(gameObject);
     }
 
     void OnDrawGizmos()

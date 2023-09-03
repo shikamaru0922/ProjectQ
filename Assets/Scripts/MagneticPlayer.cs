@@ -91,9 +91,9 @@ public class MagneticPlayer : MonoBehaviour
 
     private void Attract()
     {
-        if (collision.targetObject != null) 
+        if (collision.targetObject != null)
         {
-            
+
             GameObject target = collision.targetObject;
             // 如果那个物体有MagneticObject脚本（或某种可以确定其属性的脚本）
             MagnetInEnviroment magneticObject = target.GetComponent<MagnetInEnviroment>();
@@ -142,14 +142,14 @@ public class MagneticPlayer : MonoBehaviour
                             Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
                             rb.AddForce(directionToPlayer * attractionForce);
 
-                            
+
 
                         }
                     }
                 }
             }
         }
-        
+
     }
 
     private void Repulse()
