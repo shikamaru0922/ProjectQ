@@ -146,6 +146,29 @@ public class Golem :Enemy
         }
 
     }
+  private void PickRandomTarget()
+    {
+        if (isMoving) return; // 如果正在移动，直接返回，不做任何操作
+
+        int randomIndex;
+        do
+        {
+            randomIndex = UnityEngine.Random.Range(0, targetPositions.Length);
+        } while (targetPositions[randomIndex] == currentTarget);
+
+        currentTarget = targetPositions[randomIndex];
+
+        // 根据目标位置改变移动方向
+        faceDir = new Vector3(Mathf.Sign(currentTarget.position.x - transform.position.x), 0, 0);
+
+        // 更新Golem的朝向
+        Vector3 newScale = transform.localScale;
+        newScale.x = Mathf.Abs(newScale.x) * faceDir.x;
+        transform.localScale = newScale;
+
+        isMoving = true; // 设置为正在移动状态
+        isWaiting = false;
+    }
 
     public override void TakeDamage(int damage)
     {
@@ -173,30 +196,7 @@ public class Golem :Enemy
 
     }
 
-    private void PickRandomTarget()
-    {
-        if (isMoving) return; // 如果正在移动，直接返回，不做任何操作
-
-        int randomIndex;
-        do
-        {
-            randomIndex = UnityEngine.Random.Range(0, targetPositions.Length);
-        } while (targetPositions[randomIndex] == currentTarget);
-
-        currentTarget = targetPositions[randomIndex];
-
-        // 根据目标位置改变移动方向
-        faceDir = new Vector3(Mathf.Sign(currentTarget.position.x - transform.position.x), 0, 0);
-
-        // 更新Golem的朝向
-        Vector3 newScale = transform.localScale;
-        newScale.x = Mathf.Abs(newScale.x) * faceDir.x;
-        transform.localScale = newScale;
-
-        isMoving = true; // 设置为正在移动状态
-        isWaiting = false;
-    }
-
+  
 
 
 }

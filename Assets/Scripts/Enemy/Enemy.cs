@@ -131,8 +131,6 @@ public class Enemy : MonoBehaviour
     }
     public void Die()
     {
-        // 你可以在这里处理敌人的死亡，例如播放动画，播放声音等。
-        //Destroy(gameObject);  // 这会销毁当前的敌人对象，你可以根据需要进行修改。
         anim.SetTrigger("isDead");
     }
 

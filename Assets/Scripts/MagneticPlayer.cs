@@ -68,6 +68,7 @@ public class MagneticPlayer : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.J))
         {
             isPressing = false;
+            GetComponent<Rigidbody2D>().gravityScale = originGravity;
             isAtrracting = false;
             if (pressTime <= longPressThreshold)
             {
@@ -111,9 +112,7 @@ public class MagneticPlayer : MonoBehaviour
                             if (collision.isInX)
                             {
                                 isAtrracting = true;
-                                //Vector2 directionToTarget = (target.transform.position - transform.position).normalized;
                                 transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.transform.position.x, transform.position.y), attractionForce * Time.deltaTime);
-
                             }
                             else
                             {
@@ -121,13 +120,13 @@ public class MagneticPlayer : MonoBehaviour
                                 transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, target.transform.position.y), attractionForce * Time.deltaTime);
                                 if (collision.onMagnet)
                                 {
+                                    Debug.Log("123");
                                     GetComponent<Rigidbody2D>().gravityScale = 0;
                                 }
                                 else
                                 {
                                     GetComponent<Rigidbody2D>().gravityScale = originGravity;
                                 }
-
                             }
 
                         }
@@ -141,15 +140,11 @@ public class MagneticPlayer : MonoBehaviour
                             // 吸引物体到玩家位置
                             Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
                             rb.AddForce(directionToPlayer * attractionForce);
-
-
-
                         }
                     }
                 }
             }
         }
-
     }
 
     private void Repulse()

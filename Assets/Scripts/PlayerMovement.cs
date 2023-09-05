@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
             rb.velocity = new Vector2(rb.velocity.x, y * (speed * speedModifier));
         }
-        else
+        else if(collision.onMagnet != true)
         {
             rb.gravityScale = 3;
         }

@@ -77,36 +77,6 @@ public class Collision : MonoBehaviour
 
     void CheckTargetObject() 
     {
-        /* GameObject player = this.gameObject;  // 假设此脚本附加在玩家上
-
-         magnetInRight = rightC.gameObject.GetComponent<MagnetTrigger>().targetObject;
-         magnetInLeft = leftC.gameObject.GetComponent<MagnetTrigger>().targetObject;
-         magnetInUp = upC.gameObject.GetComponent<MagnetTrigger>().targetObject;
-         magnetInDown = downC.gameObject.GetComponent<MagnetTrigger>().targetObject;
-
-         float minDistance = float.MaxValue; // 设置一个初始大的距离值
-
-         // 用于比较距离的数组
-         GameObject[] magnets = new GameObject[] { magnetInRight, magnetInLeft, magnetInUp, magnetInDown };
-
-         foreach (var magnet in magnets)
-         {
-             if (magnet != null) // 确保磁铁不为空
-             {
-                 float distance = Vector2.Distance(player.transform.position, magnet.transform.position);
-                 if (distance < minDistance)
-                 {
-                     minDistance = distance;
-                     targetObject = magnet;
-
-                 }
-             }
-         }
-         if (magnetInRight == null && magnetInLeft == null && magnetInUp == null && magnetInDown == null)
-         {
-             targetObject = null;
-         }*/
-
         GameObject player = this.gameObject;  // 假设此脚本附加在玩家上
 
         MagnetTrigger magnetRightTrigger = rightC.gameObject.GetComponent<MagnetTrigger>();
@@ -151,9 +121,6 @@ public class Collision : MonoBehaviour
         {
             targetObject = null;
         }
-
-        // 这里，你可以使用forceToAdd为玩家添加力，例如：
-        //player.GetComponent<Rigidbody2D>().AddForce(forceToAdd);
     }
 
     void OnDrawGizmos()
