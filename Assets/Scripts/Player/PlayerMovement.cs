@@ -122,11 +122,6 @@ public class PlayerMovement : MonoBehaviour
                 WallJump();
         }
 
-        if (Input.GetButtonDown("Fire1") && !hasDashed)
-        {
-            //if (xRaw != 0 || yRaw != 0)
-                //Dash(xRaw, yRaw);
-        }
 
         if (collision.onGround && !groundTouch)
         {

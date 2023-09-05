@@ -28,7 +28,10 @@ public class Enemy : MonoBehaviour
     public float damagePerSecond;
 
     public LayerMask magnetLayer;
-
+    public bool touchWall;
+    public Vector2 rightOffset, leftOffset;
+    public float collisionRadius;
+    public LayerMask groundLayer;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -49,7 +52,8 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         faceDir = new Vector3(-transform.localScale.x/transform.localScale.x, 0, 0);
-        
+        touchWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer)
+            || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
         DetectPlayer();
     }
     private void FixedUpdate()
@@ -58,7 +62,13 @@ public class Enemy : MonoBehaviour
     }
     public virtual void Move() 
     {
+        if (touchWall)
+        {
+            faceDir.x *= -1;  // 反转方向
+            touchWall = false;  // 如果你希望在碰到墙之后只改变一次方向，可以重置touchWall为false
+        }
         rb.velocity = new Vector2(currentSpeed * faceDir.x * Time.deltaTime, rb.velocity.y);
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -143,6 +153,8 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
 
         Gizmos.DrawWireSphere(new Vector3 (transform.position.x, transform.position.y + offsetY,0),detectionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, collisionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + leftOffset, collisionRadius);
     }
 
 }

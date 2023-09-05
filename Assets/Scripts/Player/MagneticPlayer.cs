@@ -95,7 +95,7 @@ public class MagneticPlayer : MonoBehaviour
     private void TogglePole()
     {
         currentPole = (currentPole == PoleType.N_Pole) ? PoleType.S_Pole : PoleType.N_Pole;
-
+        GetComponent<Rigidbody2D>().gravityScale = originGravity;
         // 当磁极改变时，立即设置为目标颜色
         Color targetColor = (currentPole == PoleType.N_Pole) ? n_PoleTargetColor : s_PoleTargetColor;
         playerSpriteRenderer.color = targetColor;
@@ -124,7 +124,7 @@ public class MagneticPlayer : MonoBehaviour
 
     private void Attract()
     {
-        if (collision.targetObject != null)
+        /*if (collision.targetObject != null)
         {
 
             GameObject target = collision.targetObject;
@@ -152,7 +152,6 @@ public class MagneticPlayer : MonoBehaviour
                                 transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, target.transform.position.y), attractionForce * Time.deltaTime);
                                 if (collision.onMagnet)
                                 {
-                                    Debug.Log("123");
                                     GetComponent<Rigidbody2D>().gravityScale = 0;
                                 }
                                 else
@@ -172,6 +171,68 @@ public class MagneticPlayer : MonoBehaviour
                             // 吸引物体到玩家位置
                             Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
                             rb.AddForce(directionToPlayer * attractionForce);
+                        }
+                    }
+                }
+            }
+        }*/
+        if (collision.targetObject != null)
+        {
+            GameObject target = collision.targetObject;
+            MagnetInEnviroment magneticObject = target.GetComponent<MagnetInEnviroment>();
+
+            if (magneticObject != null)
+            {
+                // 检查物体的极性是否与玩家不同
+                if (magneticObject.pole != currentPole)
+                {
+                    Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
+                    if (rb != null)
+                    {
+                        // 检查目标物体是否有一个称为EndPoint的子物体
+                        Transform endPoint = target.transform.Find("EndPoint");
+                        Vector2 targetPosition;
+
+                        if (endPoint != null) // 如果有EndPoint子物体
+                        {
+                            targetPosition = endPoint.position;
+                            isAtrracting = true;
+                            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                            GetComponent<Rigidbody2D>().gravityScale = 0;
+                            transform.position = Vector2.MoveTowards(transform.position, targetPosition, attractionForce * Time.deltaTime);
+                        }
+                        else
+                        {
+                            targetPosition = target.transform.position;
+                            if (rb.isKinematic) // 如果物体是kinematic
+                            {
+                                isAtrracting = true;
+                                if (collision.isInX)
+                                {
+                                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(targetPosition.x, transform.position.y), attractionForce * Time.deltaTime);
+                                }
+                                else
+                                {
+                                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, targetPosition.y), attractionForce * Time.deltaTime);
+                                    if (collision.onMagnet)
+                                    {
+                                        GetComponent<Rigidbody2D>().gravityScale = 0;
+                                    }
+                                    else
+                                    {
+                                        GetComponent<Rigidbody2D>().gravityScale = originGravity;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (collision.onMagnet)
+                                {
+                                    return;  // 如果目标物体是检测到的磁铁，则不再施加力
+                                }
+                                Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
+                                rb.AddForce(directionToPlayer * attractionForce);
+                            }
                         }
                     }
                 }

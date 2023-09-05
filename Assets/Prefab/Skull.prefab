@@ -65,6 +65,12 @@ MonoBehaviour:
   magnetLayer:
     serializedVersion: 2
     m_Bits: 256
+  rightOffset: {x: 0.5, y: 0}
+  leftOffset: {x: -0.5, y: 0}
+  collisionRadius: 0.25
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &7490942834125634719
 Rigidbody2D:
   serializedVersion: 4
