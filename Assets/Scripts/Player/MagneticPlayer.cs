@@ -34,11 +34,21 @@ public class MagneticPlayer : MonoBehaviour
     public float detectionRadius = 1f;  // 设置检测半径
     [SerializeField]
     private float originGravity;
+
+    public Color originalColor = Color.white;   // 设置玩家的原始颜色
+    public Color n_PoleTargetColor = Color.red;       // 设置目标颜色，可以根据你的选择进行更改
+    public Color s_PoleTargetColor = Color.blue;       
+    public float colorChangeDuration = 1.0f;    // 颜色变化的持续时间
+
+    public SpriteRenderer playerSpriteRenderer;
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         collision = GetComponent<Collision>();
         originGravity = GetComponent<Rigidbody2D>().gravityScale;
+//playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -85,8 +95,28 @@ public class MagneticPlayer : MonoBehaviour
     private void TogglePole()
     {
         currentPole = (currentPole == PoleType.N_Pole) ? PoleType.S_Pole : PoleType.N_Pole;
+
+        // 当磁极改变时，立即设置为目标颜色
+        Color targetColor = (currentPole == PoleType.N_Pole) ? n_PoleTargetColor : s_PoleTargetColor;
+        playerSpriteRenderer.color = targetColor;
+
+        // 然后开始颜色过渡，使其逐渐回到原始颜色
+        StartCoroutine(ChangeColorBackToOriginal(targetColor));
     }
 
+    private IEnumerator ChangeColorBackToOriginal(Color startColor)
+    {
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < colorChangeDuration)
+        {
+            playerSpriteRenderer.color = Color.Lerp(startColor, originalColor, elapsedTime / colorChangeDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        playerSpriteRenderer.color = originalColor;   // 确保在结束时玩家颜色为原始颜色
+    }
     private void SetMagneticMode(MagneticMode mode)
     {
         currentMode = mode;
