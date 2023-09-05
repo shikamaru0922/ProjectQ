@@ -75,7 +75,6 @@ public class Enemy : MonoBehaviour
             playerState = collision.gameObject.GetComponent<PlayerState>();
             if (playerState != null)
             {
-                Debug.Log("123");
                 playerState.currentHealth -= damagePerSecond * Time.deltaTime;
             }
         }

@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         else
         Walk(dir);
+        
         anim.SetHorizontalMovement(x, y, rb.velocity.y);
 
 
@@ -111,8 +112,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             anim.SetTrigger("jump");
-            if (collision.onGround)
+            if (collision.onGround) 
+            {
                 Jump(Vector2.up, false);
+              
+            }
+                
             if (collision.onWall && !collision.onGround)
                 WallJump();
         }
@@ -178,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
         //StartCoroutine(DashWait());
     }*/
 
+  
     private void Walk(Vector2 dir)
     {
         rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);

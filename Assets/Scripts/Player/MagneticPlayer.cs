@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class MagneticPlayer : MonoBehaviour
 {
     public enum PoleType { N_Pole, S_Pole }
     public enum MagneticMode { Normal, Attraction, Repulsion }
-
+    private Rigidbody2D rb;
 
     [SerializeField]
     public PoleType currentPole;
@@ -35,6 +36,7 @@ public class MagneticPlayer : MonoBehaviour
     private float originGravity;
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         collision = GetComponent<Collision>();
         originGravity = GetComponent<Rigidbody2D>().gravityScale;
     }
@@ -149,7 +151,7 @@ public class MagneticPlayer : MonoBehaviour
 
     private void Repulse()
     {
-        
+        RepulseEffect();
         // 如果没有目标物体，直接返回
         if (collision.targetObject == null)
             return;
@@ -183,7 +185,7 @@ public class MagneticPlayer : MonoBehaviour
                     // 对玩家施加反方向的力，实现反弹效果
                     GetComponent<Rigidbody2D>().AddForce(repulseDirection * repulseForce, ForceMode2D.Impulse);
                     GetComponent<Rigidbody2D>().AddForce(Vector2.up * upForceInRepulse, ForceMode2D.Impulse);
-
+                    FindObjectOfType<GhostTrail>().ShowGhost();
                     //GetComponent<Rigidbody2D>().velocity += repulseDirection * repulseForce; 
                 }
                 else 
@@ -200,6 +202,7 @@ public class MagneticPlayer : MonoBehaviour
                     }
                     // 对玩家施加反方向的力，实现反弹效果
                     GetComponent<Rigidbody2D>().AddForce(repulseDirection * repulseForce, ForceMode2D.Impulse);
+                    FindObjectOfType<GhostTrail>().ShowGhost();
                     //GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 }
             }
@@ -211,4 +214,37 @@ public class MagneticPlayer : MonoBehaviour
         }
     }
 
+    public void RepulseEffect()
+    {
+        Camera.main.transform.DOComplete();
+        Camera.main.transform.DOShakePosition(.2f, .5f, 14, 90, false, true);
+        FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
+        StartCoroutine(DashWait());
+    }
+    IEnumerator DashWait()
+    {
+        //FindObjectOfType<GhostTrail>().ShowGhost();
+        StartCoroutine(GroundDash());
+        //DOVirtual.Float(14, 0, .8f, RigidbodyDrag);
+
+        //dashParticle.Play();
+
+        yield return new WaitForSeconds(.3f);
+
+        //dashParticle.Stop();
+        
+       
+       
+    }
+
+    IEnumerator GroundDash()
+    {
+        yield return new WaitForSeconds(.15f);
+       
+    }
+
+    void RigidbodyDrag(float x)
+    {
+        rb.drag = x;
+    }
 }
