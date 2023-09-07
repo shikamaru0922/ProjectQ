@@ -755,6 +755,7 @@ GameObject:
   - component: {fileID: 3709636007763347428}
   - component: {fileID: 4293760074001618008}
   - component: {fileID: 3642596698429618137}
+  - component: {fileID: 5680625665119633506}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -860,7 +861,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &3821118714619005236
 MonoBehaviour:
@@ -922,7 +923,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8462036103679114973}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1023,8 +1024,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a636b9a92db7445a66f2a33b55ad4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 30
   currentHealth: 0
+  magneticPlayer: {fileID: 0}
+  progressBar: {fileID: 0}
+  viewColor: {fileID: 0}
+  pole_N: {r: 0, g: 0.58431375, b: 0.79215693, a: 1}
+  pole_S: {r: 0.7921569, g: 0.13275613, b: 0, a: 1}
+  animator: {fileID: 0}
+--- !u!70 &5680625665119633506
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8462036103679114973}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 1.15}
+  m_Direction: 0
 --- !u!1001 &8478775462979010441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1080,6 +1122,10 @@ PrefabInstance:
     - target: {fileID: 4923497631411429972, guid: 76504ba984b14ae44a8fda7cc0efc2ec, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 7554354633035888510, guid: 76504ba984b14ae44a8fda7cc0efc2ec, type: 3}
+      propertyPath: orthographic size
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

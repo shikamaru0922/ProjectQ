@@ -64,7 +64,7 @@ Transform:
   - {fileID: 1091306125474122737}
   - {fileID: 4227478956290785986}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6067362621153704937
 GameObject:
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1665f32e2ab977c4796e9b7a3568fe40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 2
+  chaseSpeed: 600
   currentSpeed: 0
   faceDir: {x: 0, y: 0, z: 0}
   detectionRadius: 20
