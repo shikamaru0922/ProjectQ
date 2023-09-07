@@ -31,7 +31,7 @@ public class Golem :Enemy
 
     public float waitingTime;
 
-    [SerializeField] private LayerMask playerLayer; // 设置一个LayerMask，使其只与玩家层碰撞。
+     //new private LayerMask playerLayer; // 设置一个LayerMask，使其只与玩家层碰撞。
     [SerializeField] private int damageToTake = 10; // 这是玩家对敌人造成的伤害。
     [SerializeField] private float bounceForce = 10f; // 这是玩家受到撞击时的向上弹力。
 
