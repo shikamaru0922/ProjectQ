@@ -16,11 +16,6 @@ public class ConveyBelt : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player") 
-        {   //if(other.GetComponent<Collision>().onMagnet == true && other.GetComponent<MagneticPlayer>().isAtrracting)
-            Debug.Log(1213123);
-            //other.transform.position = Vector3.MoveTowards(other.transform.position,endPoint.position, speed * Time.deltaTime);
-        }
     }
 
     // Update is called once per frame

@@ -94,4 +94,24 @@ public class PlayerState : MonoBehaviour
         spriteRenderer.color = grayColor;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+       
+
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ConveyBelt"))
+        {
+            Transform endPoint = collision.transform.Find("EndPoint");
+            Vector2 targetPosition;
+            if (endPoint != null) // 如果有EndPoint子物体
+            {
+                targetPosition = endPoint.position;
+                transform.position = Vector2.MoveTowards(transform.position, targetPosition, collision.gameObject.GetComponent<ConveyBelt>().speed);
+            }
+        }
+    }
+
 }

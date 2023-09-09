@@ -33,6 +33,9 @@ public class Enemy : MonoBehaviour
     public float collisionRadius;
     public LayerMask groundLayer;
     // Start is called before the first frame update
+
+    private float cooldownTimer = 0f;  // 计时器
+    public float cooldownDuration = 0.5f;  // 反转方向后的冷却时间（例如，0.5秒）
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,8 +55,8 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         faceDir = new Vector3(-transform.localScale.x/transform.localScale.x, 0, 0);
-        touchWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer)
-            || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+        //touchWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer)
+        //    || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
         DetectPlayer();
     }
     private void FixedUpdate()
@@ -65,7 +68,7 @@ public class Enemy : MonoBehaviour
         if (touchWall)
         {
             faceDir.x *= -1;  // 反转方向
-            touchWall = false;  // 如果你希望在碰到墙之后只改变一次方向，可以重置touchWall为false
+            //touchWall = false;  // 如果你希望在碰到墙之后只改变一次方向，可以重置touchWall为false
         }
         rb.velocity = new Vector2(currentSpeed * faceDir.x * Time.deltaTime, rb.velocity.y);
         
@@ -75,7 +78,20 @@ public class Enemy : MonoBehaviour
     {
         if ((magnetLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
             TakeDamage(1);
-       
+
+        if ((groundLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
+        {
+            touchWall = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if ((groundLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
+        {
+            touchWall = false;
+        }
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
