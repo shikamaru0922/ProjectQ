@@ -42,9 +42,9 @@ public class PlayerState : MonoBehaviour
         {
             currentHealth = 0;
             Dead();
-            Debug.Log("Player Dead");
         }
 
+        if (progressBar!= null)
         progressBar.SetValue(currentHealth / maxHealth);
 
         if (magneticPlayer.currentPole == PoleType.N_Pole) 
@@ -72,6 +72,7 @@ public class PlayerState : MonoBehaviour
 
         // 开始减速动画和变色的协程
         StartCoroutine(SlowDownAnimationAndFadeToGray());
+        GameManager.Instance.PlayerIsDead = true;
     }
     IEnumerator SlowDownAnimationAndFadeToGray()
     {
@@ -96,7 +97,13 @@ public class PlayerState : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       
+        if (collision.gameObject.tag == "Ceiling") 
+        {
+            if (GetComponent<Collision>().onGround) 
+            {
+                Dead();
+            }
+        }
 
     }
 

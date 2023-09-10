@@ -51,7 +51,7 @@ public class Golem :Enemy
         if ((playerLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)  // ¼ì²éÊÇ·ñÓëÍæ¼Ò²ãÅö×²¡£
         {
             TakeDamage(damageToTake);  // µÐÈË¿ÛÑª¡£
-
+            GameManager.Instance.bossIsHit = true;
             Rigidbody2D playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (playerRb != null)
             {
@@ -177,6 +177,7 @@ public class Golem :Enemy
         {
             Die();
             anim.SetTrigger("GetHit");
+            GameManager.Instance.bossIsDead = true;
         }
         else
         {

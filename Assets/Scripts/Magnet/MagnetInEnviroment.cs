@@ -17,16 +17,12 @@ public class MagnetInEnviroment : MonoBehaviour
     {
         
     }
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-       /* if (collision.gameObject.tag == "Player") 
+        if (collision.transform.tag == "Player" && !gameObject.GetComponent<HorizontalMove>().enabled) 
         {
-            Debug.Log("123");
-            if (GetComponent<Rigidbody2D>().isKinematic) 
-            {   
-                if(collision.gameObject.GetComponent<MagneticPlayer>().currentPole == this.pole)
-                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-            }
-        }*/
+            gameObject.GetComponent<HorizontalMove>().enabled = true;
+        }
+
     }
 }
