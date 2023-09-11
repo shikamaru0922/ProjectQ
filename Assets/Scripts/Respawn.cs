@@ -13,9 +13,8 @@ public class Respawn : MonoBehaviour
         // 这里假设玩家有一个名为"Player"的标签，你可以根据实际情况进行修改
         if (other.CompareTag("Player"))
         {
-            Vector2 newPosition = new Vector2(other.transform.position.x, transform.position.y) + respawnOffset;
-            other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            other.transform.position = newPosition;
+            GameManager.Instance.PlayerIsDead = true;
+
         }
     }
 }

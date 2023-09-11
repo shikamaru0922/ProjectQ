@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public bool PlayerIsDead;
 
-    public GameObject menuUI;  // 指向菜单UI的引用
+    //public GameObject menuUI;  // 指向菜单UI的引用
     public float slowDownDuration = 1.0f;  // 游戏暂停的过渡时间s
 
     private void Awake()
@@ -26,38 +26,51 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+       
+
+    }
+
+    private void Start()
+    {
     }
 
     private void Update()
     {
         if (PlayerIsDead)
         {
-            
-            StartCoroutine(PauseGameGradually());
-            PlayerIsDead = false;  // 为了防止重复触发s
+            //StartCoroutine(PauseGameGradually());
+            //PlayerIsDead = false;  // 为了防止重复触发s
+            //ShowMenu();
+            Time.timeScale = 0.001f;
         }
     }
 
     IEnumerator PauseGameGradually()
     {
-        Debug.Log("开始暂停游戏");
         float startTime = Time.unscaledTime;  // 使用unscaledTime，因为它不受timeScale的影响
         float initialTimeScale = Time.timeScale;
 
         while (Time.unscaledTime - startTime < slowDownDuration)
         {
             float elapsed = Time.unscaledTime - startTime;
-            Time.timeScale = Mathf.Lerp(initialTimeScale, 0, elapsed / slowDownDuration);
+            
             yield return null;
         }
-
-        Time.timeScale = 0;
         //ShowMenu();
+    }
+
+    public void Reset()
+    {
+        bossIsHit = false;
+        bossIsDead = false;
+        PlayerIsDead = false;
+        Time.timeScale = 1;  // 将游戏时间恢复到正常速度
+        Debug.Log(Time.timeScale);
     }
 
     void ShowMenu()
     {
         // 显示菜单UI
-        menuUI.SetActive(true);
+        //menuUI.SetActive(true);
     }
 }

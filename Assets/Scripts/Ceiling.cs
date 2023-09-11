@@ -24,11 +24,11 @@ public class Ceiling : MonoBehaviour
     private Transform magnetTransform; // 用于存储与"Magnet"对象的Transfor
     private void Start()
     {
-        originalColor = ceilingTilemap.color;
+       // originalColor = ceilingTilemap.color;
 
         // 使Tilemap的颜色呼吸灯效果
-        DOTween.To(() => ceilingTilemap.color, x => ceilingTilemap.color = x, targetColor, pulseDuration)
-               .SetLoops(-1, LoopType.Yoyo);
+        //DOTween.To(() => ceilingTilemap.color, x => ceilingTilemap.color = x, targetColor, pulseDuration)
+        //       .SetLoops(-1, LoopType.Yoyo);
     }
 
     private void Update()
