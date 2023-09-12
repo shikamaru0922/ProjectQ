@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3314694790860285361
 SpriteRenderer:
@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2dfe1a9b53af3418862a5ef8faf97b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinSound: {fileID: 8300000, guid: 757f13f3dc4804141bae1fb3fc708e83, type: 3}
   jumpForce: 5
   animationSpeedMultiplier: 10
   waitTimeBeforeDestroy: 0.2
+  coinSoundVolume: 0.1

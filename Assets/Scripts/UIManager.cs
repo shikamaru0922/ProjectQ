@@ -21,6 +21,11 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void AgainButton() 
+    {
+    
+    }
+
 
     public void ReloadCurrentScene()
     {

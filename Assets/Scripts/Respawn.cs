@@ -14,7 +14,7 @@ public class Respawn : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameManager.Instance.PlayerIsDead = true;
-
+            other.GetComponent<MusicInPlayer>().PlayDeathSound();
         }
     }
 }

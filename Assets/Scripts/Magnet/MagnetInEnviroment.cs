@@ -21,7 +21,8 @@ public class MagnetInEnviroment : MonoBehaviour
     {
         if (collision.transform.tag == "Player" && !gameObject.GetComponent<HorizontalMove>().enabled) 
         {
-            gameObject.GetComponent<HorizontalMove>().enabled = true;
+            if(gameObject.GetComponent<HorizontalMove>()!= null) 
+                gameObject.GetComponent<HorizontalMove>().enabled = true;
         }
 
     }

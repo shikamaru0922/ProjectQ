@@ -35,12 +35,16 @@ public class MagneticPlayer : MonoBehaviour
     [SerializeField]
     private float originGravity;
 
-    public Color originalColor = Color.white;   // 设置玩家的原始颜色
+    //public Color originalColor = Color.white;   // 设置玩家的原始颜色
     public Color n_PoleTargetColor = Color.red;       // 设置目标颜色，可以根据你的选择进行更改
-    public Color s_PoleTargetColor = Color.blue;       
+    public Color s_PoleTargetColor = Color.blue;
+    public Color n_PoleOriginalColor;  // 设置为N_Pole的原始颜色
+    public Color s_PoleOriginalColor = Color.white;  // 设置为S_Pole的原始颜色
     public float colorChangeDuration = 1.0f;    // 颜色变化的持续时间
 
     public SpriteRenderer playerSpriteRenderer;
+
+    private MusicInPlayer musicInPlayer;
 
 
     private void Start()
@@ -48,6 +52,7 @@ public class MagneticPlayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         collision = GetComponent<Collision>();
         originGravity = GetComponent<Rigidbody2D>().gravityScale;
+        musicInPlayer = GetComponent<MusicInPlayer>();
 //playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
@@ -72,7 +77,7 @@ public class MagneticPlayer : MonoBehaviour
             if (pressTime > longPressThreshold)
             {
                 SetMagneticMode(MagneticMode.Attraction);
-                
+
                 Attract();
             }
         }
@@ -85,8 +90,27 @@ public class MagneticPlayer : MonoBehaviour
             if (pressTime <= longPressThreshold)
             {
                 SetMagneticMode(MagneticMode.Repulsion);
-                
+
                 Repulse();
+            }
+        }
+
+        if (isAtrracting) // 替换为你的条件
+        {
+            Debug.Log(1222);
+            if (!musicInPlayer.isAttractSoundPlaying)
+            {
+                musicInPlayer.PlayAttractSound();
+                Debug.Log(111);
+                musicInPlayer.isAttractSoundPlaying = true;
+            }
+        }
+        else if (isAtrracting == false) // 替换为你的条件
+        {
+            if (musicInPlayer.isAttractSoundPlaying)
+            {
+                musicInPlayer.StopAttractSound();
+                musicInPlayer.isAttractSoundPlaying = false;
             }
         }
 
@@ -96,26 +120,33 @@ public class MagneticPlayer : MonoBehaviour
     {
         currentPole = (currentPole == PoleType.N_Pole) ? PoleType.S_Pole : PoleType.N_Pole;
         GetComponent<Rigidbody2D>().gravityScale = originGravity;
+
         // 当磁极改变时，立即设置为目标颜色
         Color targetColor = (currentPole == PoleType.N_Pole) ? n_PoleTargetColor : s_PoleTargetColor;
         playerSpriteRenderer.color = targetColor;
 
-        // 然后开始颜色过渡，使其逐渐回到原始颜色
-        StartCoroutine(ChangeColorBackToOriginal(targetColor));
+        // 然后开始颜色过渡，使其逐渐回到对应的原始颜色
+        Color originalColor = (currentPole == PoleType.N_Pole) ? n_PoleOriginalColor : s_PoleOriginalColor;
+        StartCoroutine(ChangeColorBackToOriginal(targetColor, originalColor));
     }
 
-    private IEnumerator ChangeColorBackToOriginal(Color startColor)
+    // 请注意，我们现在需要传递两个颜色参数给这个协程
+    IEnumerator ChangeColorBackToOriginal(Color startColor, Color endColor)
     {
-        float elapsedTime = 0.0f;
+        float elapsed = 0f;  // 计时器，追踪过渡的进度
 
-        while (elapsedTime < colorChangeDuration)
+        while (elapsed < colorChangeDuration)
         {
-            playerSpriteRenderer.color = Color.Lerp(startColor, originalColor, elapsedTime / colorChangeDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            elapsed += Time.deltaTime;
+            float percentage = Mathf.Clamp01(elapsed / colorChangeDuration);  // 计算过渡进度的百分比
+
+            // 使用Lerp进行颜色插值
+            playerSpriteRenderer.color = Color.Lerp(startColor, endColor, percentage);
+
+            yield return null;  // 等待下一帧
         }
 
-        playerSpriteRenderer.color = originalColor;   // 确保在结束时玩家颜色为原始颜色
+        playerSpriteRenderer.color = endColor;  // 确保在动画结束时精确设置为目标颜色
     }
     private void SetMagneticMode(MagneticMode mode)
     {
@@ -124,58 +155,7 @@ public class MagneticPlayer : MonoBehaviour
 
     private void Attract()
     {
-        /*if (collision.targetObject != null)
-        {
-
-            GameObject target = collision.targetObject;
-            // 如果那个物体有MagneticObject脚本（或某种可以确定其属性的脚本）
-            MagnetInEnviroment magneticObject = target.GetComponent<MagnetInEnviroment>();
-            if (magneticObject != null)
-            {
-                // 检查物体的极性是否与玩家不同
-                if (magneticObject.pole != currentPole)
-                {
-                    Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
-                    if (rb != null)
-                    {
-                        if (rb.isKinematic) // 如果物体是kinematic
-                        {
-                            // 吸引玩家到物体位置
-                            if (collision.isInX)
-                            {
-                                isAtrracting = true;
-                                transform.position = Vector2.MoveTowards(transform.position, new Vector2(target.transform.position.x, transform.position.y), attractionForce * Time.deltaTime);
-                            }
-                            else
-                            {
-                                isAtrracting = true;
-                                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, target.transform.position.y), attractionForce * Time.deltaTime);
-                                if (collision.onMagnet)
-                                {
-                                    GetComponent<Rigidbody2D>().gravityScale = 0;
-                                }
-                                else
-                                {
-                                    GetComponent<Rigidbody2D>().gravityScale = originGravity;
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            // 如果检测到磁铁在玩家的检测范围内，返回
-                            if (collision.onMagnet)
-                            {
-                                return;  // 如果目标物体是检测到的磁铁，则不再施加力
-                            }
-                            // 吸引物体到玩家位置
-                            Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
-                            rb.AddForce(directionToPlayer * attractionForce);
-                        }
-                    }
-                }
-            }
-        }*/
+        isAtrracting = true;
         if (collision.targetObject != null)
         {
             GameObject target = collision.targetObject;
@@ -230,6 +210,7 @@ public class MagneticPlayer : MonoBehaviour
                                 {
                                     return;  // 如果目标物体是检测到的磁铁，则不再施加力
                                 }
+                                isAtrracting = true;
                                 Vector2 directionToPlayer = (transform.position - target.transform.position).normalized;
                                 rb.AddForce(directionToPlayer * attractionForce);
                             }
@@ -243,6 +224,7 @@ public class MagneticPlayer : MonoBehaviour
     private void Repulse()
     {
         RepulseEffect();
+        musicInPlayer.PlayRepelSound();
         // 如果没有目标物体，直接返回
         if (collision.targetObject == null)
             return;

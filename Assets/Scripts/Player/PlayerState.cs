@@ -14,7 +14,7 @@ public class PlayerState : MonoBehaviour
     public Color pole_N;
     public Color pole_S;
 
-
+    private MusicInPlayer musicInplayer;
     private PlayerMovement playerMovement;
     private SpriteRenderer spriteRenderer;
 
@@ -25,6 +25,7 @@ public class PlayerState : MonoBehaviour
         currentHealth = maxHealth;
         // 获取组件的引用
         playerMovement = GetComponent<PlayerMovement>();
+        musicInplayer = GetComponent<MusicInPlayer>();
         magneticPlayer = GetComponent<MagneticPlayer>();
         spriteRenderer = magneticPlayer.playerSpriteRenderer;
         animator = magneticPlayer.playerSpriteRenderer.GetComponent<Animator>();
@@ -33,6 +34,8 @@ public class PlayerState : MonoBehaviour
         {
             Debug.LogError("Required components are missing on the player!");
         }
+
+
     }
 
     // Update is called once per frame
@@ -42,6 +45,7 @@ public class PlayerState : MonoBehaviour
         {
             currentHealth = 0;
             Dead();
+            
         }
 
         if (progressBar!= null)
@@ -69,6 +73,8 @@ public class PlayerState : MonoBehaviour
 
         // 将玩家颜色更改为灰色
         spriteRenderer.color = Color.gray;
+
+        musicInplayer.PlayDeathSound();
 
         // 开始减速动画和变色的协程
         StartCoroutine(SlowDownAnimationAndFadeToGray());

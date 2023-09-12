@@ -9,6 +9,9 @@ public class Laser : MonoBehaviour
 
     private PlayerState playerState; // 玩家的状态类引用
 
+
+    public AudioClip attackSound;
+    public float attackSoundVolume = 0.5f;
     private void Update()
     {
         // 如果玩家在激光范围内，则扣血
@@ -21,7 +24,9 @@ public class Laser : MonoBehaviour
     public void SetTriggerTure() 
     {
         GetComponent<BoxCollider2D>().enabled = true;
-        
+        PlayShootingSound();
+
+
     }
 
     public void SetTriggerFalse()
@@ -52,6 +57,14 @@ public class Laser : MonoBehaviour
         {
             isPlayerInLaserRange = false;
             playerState = null;
+        }
+    }
+
+    private void PlayShootingSound()
+    {
+        if (attackSound != null)
+        {
+            AudioSource.PlayClipAtPoint(attackSound, transform.position, attackSoundVolume);
         }
     }
 }
