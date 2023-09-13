@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     IEnumerator PauseGameGradually()
     {
         float startTime = Time.unscaledTime;  // 使用unscaledTime，因为它不受timeScale的影响

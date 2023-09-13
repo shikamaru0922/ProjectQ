@@ -28,7 +28,8 @@ public class Enemy : MonoBehaviour
     public float damagePerSecond;
 
     public LayerMask magnetLayer;
-    public bool touchWall;
+    public bool touchRightWall;
+    public bool touchLeftWall;
     public Vector2 rightOffset, leftOffset;
     public float collisionRadius;
     public LayerMask groundLayer;
@@ -49,15 +50,21 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        faceDir = new Vector3(-transform.localScale.x / transform.localScale.x, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        faceDir = new Vector3(-transform.localScale.x/transform.localScale.x, 0, 0);
-        //touchWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer)
-        //    || Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+        //faceDir = new Vector3(-transform.localScale.x/transform.localScale.x, 0, 0);
+        
         DetectPlayer();
+        
+
+        touchRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, collisionRadius, groundLayer);
+        touchLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, collisionRadius, groundLayer);
+
+    
     }
     private void FixedUpdate()
     {
@@ -65,13 +72,16 @@ public class Enemy : MonoBehaviour
     }
     public virtual void Move() 
     {
-        if (touchWall)
+        if (touchRightWall && !touchLeftWall)
         {
-            faceDir.x *= -1;  // 反转方向
-            //touchWall = false;  // 如果你希望在碰到墙之后只改变一次方向，可以重置touchWall为false
+            faceDir.x = -1;
+        }
+        else if (touchLeftWall && !touchRightWall)
+        {
+            faceDir.x = 1;
         }
         rb.velocity = new Vector2(currentSpeed * faceDir.x * Time.deltaTime, rb.velocity.y);
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -81,7 +91,7 @@ public class Enemy : MonoBehaviour
 
         if ((groundLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
         {
-            touchWall = true;
+         
         }
     }
 
@@ -89,7 +99,8 @@ public class Enemy : MonoBehaviour
     {
         if ((groundLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
         {
-            touchWall = false;
+            
+            
         }
 
     }

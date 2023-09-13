@@ -97,7 +97,6 @@ public class MagneticPlayer : MonoBehaviour
 
         if (isAtrracting) // 替换为你的条件
         {
-            Debug.Log(1222);
             if (!musicInPlayer.isAttractSoundPlaying)
             {
                 musicInPlayer.PlayAttractSound();

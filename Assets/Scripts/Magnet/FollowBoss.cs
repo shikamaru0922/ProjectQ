@@ -18,10 +18,14 @@ public class FollowBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 newPosition = transform.position;
-        newPosition.x = boss.transform.position.x;
-        newPosition.y = ceiling.transform.position.y + initialDistanceToCeiling; // 加上初始距离，而不是减去
-        transform.position = newPosition;
+        if (boss != null) 
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.x = boss.transform.position.x;
+            newPosition.y = ceiling.transform.position.y + initialDistanceToCeiling; // 加上初始距离，而不是减去
+            transform.position = newPosition;
+        }
+        
 
     }
 

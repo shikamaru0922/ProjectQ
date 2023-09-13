@@ -22,12 +22,14 @@ public class FallingTrigger : MonoBehaviour
         // 当玩家进入Trigger时开始下坠
         if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
         {
+            Debug.Log(11);
             parentCeiling.StartFalling();
             DropObjects();
         }
 
         if (GameManager.Instance.bossIsDead) 
         {
+            Debug.Log(11);
             ReturnToOriginalPosition();
         }
     }
@@ -35,6 +37,7 @@ public class FallingTrigger : MonoBehaviour
 
     public void ReturnToOriginalPosition()
     {
+        Debug.Log(11);
         // 我们只需交换开始和结束的位置来返回到原始位置
         StartCoroutine(MoveObjects(end1, start1, wall_1));
         StartCoroutine(MoveObjects(end2, start2, wall_2));

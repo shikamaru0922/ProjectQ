@@ -19,6 +19,12 @@ public class Laser : MonoBehaviour
         {
             playerState.currentHealth -= damagePerSecond * Time.deltaTime;
         }
+
+        if (GameManager.Instance.bossIsDead) 
+        {
+            gameObject.SetActive(false);
+        }
+
     }
 
     public void SetTriggerTure() 

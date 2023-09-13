@@ -19,11 +19,11 @@ public class MagnetInEnviroment : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player" && !gameObject.GetComponent<HorizontalMove>().enabled) 
-        {
-            if(gameObject.GetComponent<HorizontalMove>()!= null) 
-                gameObject.GetComponent<HorizontalMove>().enabled = true;
-        }
+        var horizontalMoveComponent = gameObject.GetComponent<HorizontalMove>();
 
+        if (collision.transform.tag == "Player" && horizontalMoveComponent != null && !horizontalMoveComponent.enabled)
+        {
+            horizontalMoveComponent.enabled = true;
+        }
     }
 }
