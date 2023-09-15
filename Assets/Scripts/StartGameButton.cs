@@ -12,10 +12,7 @@ public class StartGameButton : MonoBehaviour
 
     public void QuitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;  // 如果在Unity编辑器中，停止播放
-#else
             Application.Quit();  // 如果是构建版本，退出游戏
-#endif
+
     }
 }
